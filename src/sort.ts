@@ -1,5 +1,23 @@
+import { IDsArray } from './index';
 
-export default function sortKD(ids, coords, nodeSize, left, right, axis) {
+type AnyArray = any[]
+  | Int8Array
+  | Int16Array
+  | Int32Array
+  | Uint8Array
+  | Uint16Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array;
+
+export default function sortKD(
+  ids: IDsArray,
+  coords: Float64Array,
+  nodeSize: number,
+  left: number,
+  right: number,
+  axis: number,
+): void {
     if (right - left <= nodeSize) return;
 
     const m = (left + right) >> 1; // middle index
@@ -15,7 +33,7 @@ export default function sortKD(ids, coords, nodeSize, left, right, axis) {
 
 // custom Floyd-Rivest selection algorithm: sort ids and coords so that
 // [left..k-1] items are smaller than k-th item (on either x or y axis)
-function select(ids, coords, k, left, right, axis) {
+function select(ids: IDsArray, coords: Float64Array, k: number, left: number, right: number, axis: number): void {
 
     while (right > left) {
         if (right - left > 600) {
@@ -55,13 +73,13 @@ function select(ids, coords, k, left, right, axis) {
     }
 }
 
-function swapItem(ids, coords, i, j) {
+function swapItem(ids: AnyArray, coords: Float64Array, i: number, j: number): void {
     swap(ids, i, j);
     swap(coords, 2 * i, 2 * j);
     swap(coords, 2 * i + 1, 2 * j + 1);
 }
 
-function swap(arr, i, j) {
+function swap(arr: AnyArray, i: number, j: number): void {
     const tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;

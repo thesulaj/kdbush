@@ -1,14 +1,22 @@
+import { IDsArray } from './index';
 
-export default function within(ids, coords, qx, qy, r, nodeSize) {
+export default function within(
+  ids: IDsArray,
+  coords: Float64Array,
+  qx: number,
+  qy: number,
+  r: number,
+  nodeSize: number,
+): number[] {
     const stack = [0, ids.length - 1, 0];
     const result = [];
     const r2 = r * r;
 
     // recursively search for items within radius in the kd-sorted arrays
     while (stack.length) {
-        const axis = stack.pop();
-        const right = stack.pop();
-        const left = stack.pop();
+        const axis = stack.pop()!;
+        const right = stack.pop()!;
+        const left = stack.pop()!;
 
         // if we reached "tree node", search linearly
         if (right - left <= nodeSize) {
@@ -42,7 +50,7 @@ export default function within(ids, coords, qx, qy, r, nodeSize) {
     return result;
 }
 
-function sqDist(ax, ay, bx, by) {
+function sqDist(ax: number, ay: number, bx: number, by: number): number {
     const dx = ax - bx;
     const dy = ay - by;
     return dx * dx + dy * dy;

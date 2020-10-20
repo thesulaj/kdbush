@@ -1,8 +1,9 @@
 import {terser} from 'rollup-plugin-terser';
+import ts from '@wessberg/rollup-plugin-ts';
 import buble from '@rollup/plugin-buble';
 
 const config = (file, plugins) => ({
-    input: 'src/index.js',
+    input: 'src/index.ts',
     output: {
         name: 'KDBush',
         format: 'umd',
@@ -13,6 +14,6 @@ const config = (file, plugins) => ({
 });
 
 export default [
-    config('kdbush.js', [buble()]),
-    config('kdbush.min.js', [terser(), buble()])
+    config('kdbush.ts', [ts()]),
+    config('kdbush.min.js', [ts(), terser(), buble()])
 ];

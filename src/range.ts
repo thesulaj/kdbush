@@ -1,13 +1,22 @@
+import { IDsArray } from './index';
 
-export default function range(ids, coords, minX, minY, maxX, maxY, nodeSize) {
-    const stack = [0, ids.length - 1, 0];
+export default function range(
+  ids: IDsArray,
+  coords: Float64Array,
+  minX: number,
+  minY: number,
+  maxX: number,
+  maxY: number,
+  nodeSize: number,
+): number[] {
+    const stack: number[] = [0, ids.length - 1, 0];
     const result = [];
 
     // recursively search for items in range in the kd-sorted arrays
     while (stack.length) {
-        const axis = stack.pop();
-        const right = stack.pop();
-        const left = stack.pop();
+        const axis = stack.pop()!;
+        const right = stack.pop()!;
+        const left = stack.pop()!;
 
         // if we reached "tree node", search linearly
         if (right - left <= nodeSize) {

@@ -1,6 +1,6 @@
 
 import test from 'tape';
-import KDBush from './src/index.js';
+import KDBush from './src/index.ts';
 
 /* eslint comma-spacing: 0 */
 
