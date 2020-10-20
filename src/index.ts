@@ -10,8 +10,6 @@ export type IDsArray = Uint16Array|Uint32Array;
 export default class KDBush<A = Position> {
   nodeSize: number;
 
-  points: A[];
-
   ids: IDsArray;
 
   coords: Float64Array;
@@ -23,7 +21,6 @@ export default class KDBush<A = Position> {
     nodeSize: number = 64,
   ) {
     this.nodeSize = nodeSize;
-    this.points = points;
 
     const IndexArrayType = points.length < 65536 ? Uint16Array : Uint32Array;
 
