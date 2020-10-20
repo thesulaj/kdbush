@@ -3,9 +3,9 @@
   "version": "3.0.0",
   "description": "A very fast static 2D index for points based on kd-tree.",
   "module": "src/index.ts",
-  "main": "kdbush.js",
-  "jsdelivr": "kdbush.min.js",
-  "unpkg": "kdbush.min.js",
+  "main": "kdbush.ts",
+  "jsdelivr": "build/kdbush.min.js",
+  "unpkg": "build/kdbush.min.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/mourner/kdbush.git"
