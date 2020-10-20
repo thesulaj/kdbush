@@ -28,7 +28,6 @@ export default class KDBush {
     getX: GetterFn = defaultGetX,
     getY: GetterFn = defaultGetY,
     nodeSize: number = 64,
-    ArrayType = Float64Array,
   ) {
     this.nodeSize = nodeSize;
     this.points = points;
@@ -38,7 +37,7 @@ export default class KDBush {
     // store indices to the input array and coordinates in separate typed arrays
     const ids = new IndexArrayType(points.length);
     this.ids = ids;
-    const coords = new ArrayType(points.length * 2);
+    const coords = new Float64Array(points.length * 2);
     this.coords = coords;
 
     for (let i = 0; i < points.length; i++) {

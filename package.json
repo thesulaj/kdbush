@@ -34,7 +34,7 @@
     "pretest": "yarn lint",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test.ts'",
     "lint": "eslint ./src --ext .jsx,.js,.tsx,.ts --max-warnings 0",
-    "bench": "node -r esm bench.js",
+    "bench": "ts-node -O '{\"module\":\"commonjs\"}' bench.ts",
     "build": "rollup -c",
     "prepublishOnly": "npm run build"
   },
