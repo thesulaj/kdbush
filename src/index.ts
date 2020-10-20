@@ -16,8 +16,11 @@ function defaultGetY(p: Position): number {
 
 export default class KDBush {
   nodeSize: number;
+
   points: Position[];
+
   ids: IDsArray;
+
   coords: Float64Array;
 
   constructor(
@@ -33,8 +36,10 @@ export default class KDBush {
     const IndexArrayType = points.length < 65536 ? Uint16Array : Uint32Array;
 
     // store indices to the input array and coordinates in separate typed arrays
-    const ids = this.ids = new IndexArrayType(points.length);
-    const coords = this.coords = new ArrayType(points.length * 2);
+    const ids = new IndexArrayType(points.length);
+    this.ids = ids;
+    const coords = new ArrayType(points.length * 2);
+    this.coords = coords;
 
     for (let i = 0; i < points.length; i++) {
       ids[i] = i;

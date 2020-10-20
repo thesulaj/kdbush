@@ -1,10 +1,11 @@
 
-import test from 'tape';
-import KDBush from './src/index.ts';
+import * as assert from 'assert';
+import { Position } from 'geojson';
+import KDBush from './src/index';
 
 /* eslint comma-spacing: 0 */
 
-const points = [
+const points: Position[] = [
     [54,1],[97,21],[65,35],[33,54],[95,39],[54,3],[53,54],[84,72],[33,34],[43,15],[52,83],[81,23],[1,61],[38,74],
     [11,91],[24,56],[90,31],[25,57],[46,61],[29,69],[49,60],[4,98],[71,15],[60,25],[38,84],[52,38],[94,51],[13,25],
     [77,73],[88,87],[6,27],[58,22],[53,28],[27,91],[96,98],[93,14],[22,93],[45,94],[18,28],[35,15],[19,81],[20,81],
@@ -27,40 +28,36 @@ const coords = [
     53,49,60,50,68,57,70,56,77,63,86,71,90,52,83,71,82,72,81,94,51,75,53,95,39,78,53,88,62,84,72,77,73,99,76,73,81,88,
     87,96,98,96,82];
 
-test('creates an index', (t) => {
+it('creates an index', () => {
     const index = new KDBush(points, undefined, undefined, 10);
 
-    t.same(index.ids, ids, 'ids are kd-sorted');
-    t.same(index.coords, coords, 'coords are kd-sorted');
-
-    t.end();
+    assert.deepStrictEqual(index.ids, ids, 'ids are kd-sorted');
+    assert.deepStrictEqual(index.coords, coords, 'coords are kd-sorted');
 });
 
-test('range search', (t) => {
+it('range search', () => {
     const index = new KDBush(points, undefined, undefined, 10);
 
     const result = index.range(20, 30, 50, 70);
 
-    t.same(result, [60,20,45,3,17,71,44,19,18,15,69,90,62,96,47,8,77,72], 'returns ids');
+    assert.deepStrictEqual(result, [60,20,45,3,17,71,44,19,18,15,69,90,62,96,47,8,77,72], 'returns ids');
 
     for (const id of result) {
         const p = points[id];
         if (p[0] < 20 || p[0] > 50 || p[1] < 30 || p[1] > 70)
-            t.fail('result point in range');
+            assert.fail('result point in range');
     }
-    t.pass('result points in range');
+    console.info('result points in range');
 
     for (const id of result) {
         const p = points[id];
         if (result.indexOf(id) < 0 && p[0] >= 20 && p[0] <= 50 && p[1] >= 30 && p[1] <= 70)
-            t.fail('outside point not in range');
+            assert.fail('outside point not in range');
     }
-    t.pass('outside points not in range');
-
-    t.end();
+    console.info('outside points not in range');
 });
 
-test('radius search', (t) => {
+test('radius search', () => {
     const index = new KDBush(points, undefined, undefined, 10);
 
     const qp = [50, 50];
@@ -69,25 +66,23 @@ test('radius search', (t) => {
 
     const result = index.within(qp[0], qp[1], r);
 
-    t.same(result, [60,6,25,92,42,20,45,3,71,44,18,96], 'returns ids');
+    assert.deepStrictEqual(result, [60,6,25,92,42,20,45,3,71,44,18,96], 'returns ids');
 
     for (const id of result) {
         const p = points[id];
-        if (sqDist(p, qp) > r2) t.fail('result point in range');
+        if (sqDist(p, qp) > r2) assert.fail('result point in range');
     }
-    t.pass('result points in range');
+    console.info('result points in range');
 
     for (const id of result) {
         const p = points[id];
         if (result.indexOf(id) < 0 && sqDist(p, qp) <= r2)
-            t.fail('outside point not in range');
+            assert.fail('outside point not in range');
     }
-    t.pass('outside points not in range');
-
-    t.end();
+    console.info('outside points not in range');
 });
 
-function sqDist(a, b) {
+function sqDist(a: Position, b: Position) {
     const dx = a[0] - b[0];
     const dy = a[1] - b[1];
     return dx * dx + dy * dy;
