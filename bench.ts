@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import * as v8 from 'v8';
+import { Position } from 'geojson';
 import KDBush from './src/index';
 
 const randomInt = (max: number) => Math.floor(Math.random() * max);
@@ -12,7 +13,8 @@ for (let i = 0; i < 1000000; i++) points.push(randomPoint(1000));
 console.log(`memory: ${heapSize()}`);
 
 console.time(`index ${points.length} points`);
-const index = new KDBush(points, undefined, undefined, 64);
+const index = new KDBush<Position>(points, (p: Position) => p[0], (p: Position) => p[1], 10);
+
 console.timeEnd(`index ${points.length} points`);
 
 console.log(`memory: ${heapSize()}`);

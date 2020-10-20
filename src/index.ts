@@ -4,29 +4,22 @@ import sort from './sort';
 import range from './range';
 import within from './within';
 
-export type GetterFn = (p: Position) => number;
+export type GetterFn<A = Position> = (p: A) => number;
 export type IDsArray = Uint16Array|Uint32Array;
 
-function defaultGetX(p: Position): number {
-  return p[0];
-}
-function defaultGetY(p: Position): number {
-  return p[1];
-}
-
-export default class KDBush {
+export default class KDBush<A = Position> {
   nodeSize: number;
 
-  points: Position[];
+  points: A[];
 
   ids: IDsArray;
 
   coords: Float64Array;
 
   constructor(
-    points: Position[],
-    getX: GetterFn = defaultGetX,
-    getY: GetterFn = defaultGetY,
+    points: A[],
+    getX: GetterFn<A>,
+    getY: GetterFn<A>,
     nodeSize: number = 64,
   ) {
     this.nodeSize = nodeSize;

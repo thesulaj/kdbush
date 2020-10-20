@@ -35,7 +35,7 @@ function sqDist(a: Position, b: Position) {
 }
 
 it('creates an index', () => {
-  const index = new KDBush(points, undefined, undefined, 10);
+  const index = new KDBush<Position>(points, (p: Position) => p[0], (p: Position) => p[1], 10);
 
   if (index.ids.length !== ids.length) {
     assert.fail(`IDs have different lengths: ${index.ids.length} != ${ids.length}`);
@@ -56,7 +56,7 @@ it('creates an index', () => {
 });
 
 it('range search', () => {
-  const index = new KDBush(points, undefined, undefined, 10);
+  const index = new KDBush<Position>(points, (p: Position) => p[0], (p: Position) => p[1], 10);
 
   const result = index.range(20, 30, 50, 70);
 
@@ -74,7 +74,7 @@ it('range search', () => {
 });
 
 it('radius search', () => {
-  const index = new KDBush(points, undefined, undefined, 10);
+  const index = new KDBush<Position>(points, (p: Position) => p[0], (p: Position) => p[1], 10);
 
   const qp = [50, 50];
   const r = 20;
